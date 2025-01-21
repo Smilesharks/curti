@@ -1,4 +1,5 @@
 ---
+import Image from '~/components/common/Image.astro';
 // ImageGallery.astro
 interface GalleryImage {
   photo: string;
@@ -28,12 +29,19 @@ const { images } = Astro.props;
       {
         images.map((image, index) => (
           <li class="space-y-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-            <img
+            <Image
+              src={image.photo}
+              alt={image.alt}
+              data-index={index + 1}
+              width={480}
+              class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+            />
+            {/* <img
               src={image.photo}
               alt={image.alt}
               data-index={index + 1}
               class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-            />
+            /> */}
             <div class="space-y-2">
               <div class="flex justify-between text-gray-900 text-sm font-bold">
                 <h3>{image.title}</h3>
@@ -198,6 +206,78 @@ const { images } = Astro.props;
           </figure>
         </div>
         <!-- grid -->
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “Excepteur consectetur deserunt id incididunt veniam mollit officia sint qui aute duis sit cillum.
+                Reprehenderit fugiat amet aliqua in commodo minim sunt laborum.”
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <img
+                class="h-10 w-10 rounded-full bg-gray-50"
+                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Lindsay Walton</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇨🇱</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “Excepteur consectetur deserunt id incididunt veniam mollit officia sint qui aute duis sit cillum.
+                Reprehenderit fugiat amet aliqua in commodo minim sunt laborum.”
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <img
+                class="h-10 w-10 rounded-full bg-gray-50"
+                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Lindsay Walton</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇨🇱</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “Excepteur consectetur deserunt id incididunt veniam mollit officia sint qui aute duis sit cillum.
+                Reprehenderit fugiat amet aliqua in commodo minim sunt laborum.”
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <img
+                class="h-10 w-10 rounded-full bg-gray-50"
+                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Lindsay Walton</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇨🇱</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
       </div>
     </div>
   </div>
@@ -210,10 +290,11 @@ const { images } = Astro.props;
     >
       <div class="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
         <div class="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
-          <img
-            class="absolute inset-0 h-full w-full rounded-2xl bg-[#E0F2F9] object-cover shadow-2xl"
+          <Image
             src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
             alt=""
+            width={480}
+            class="absolute inset-0 h-full w-full rounded-2xl bg-[#E0F2F9] object-cover shadow-2xl"
           />
         </div>
       </div>

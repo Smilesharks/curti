@@ -15,6 +15,12 @@ type ImageType = {
   attributes: HTMLAttributes<'img'>;
 };
 
+type Props = ImageProps & { class?: string };
+type ImageType = {
+  src: string;
+  attributes: HTMLAttributes<'img'>;
+};
+
 const props = Astro.props;
 
 if (props.alt === undefined || props.alt === null) {
@@ -56,6 +62,12 @@ if (
   !image ? (
     <Fragment />
   ) : (
-    <img src={image.src} crossorigin="anonymous" referrerpolicy="no-referrer" {...image.attributes} />
+    <img
+      src={image.src}
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      class={props.class || ''}
+      {...image.attributes}
+    />
   )
 }
