@@ -20,10 +20,8 @@ const { images } = Astro.props;
 <section id="works" class="w-full pb-32 scroll-pt-24 select-none">
   <div class="max-w-7xl px-6 lg:px-8 mx-auto duration-1000 delay-300 opacity-0s select-none ease animate-fade-in-view">
     <div class="mx-auto mb-16 max-w-xl text-center">
-      <h2 class="text-lg font-semibold leading-8 tracking-tight text-[#5BB4CC]">Testimonials</h2>
-      <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl">
-        We have worked with thousands of amazing people
-      </p>
+      <h2 class="text-lg font-semibold leading-8 tracking-tight text-[#5BB4CC]">Work</h2>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl">The Art</p>
     </div>
     <ul id="gallery" class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       {
@@ -34,14 +32,8 @@ const { images } = Astro.props;
               alt={image.alt}
               data-index={index + 1}
               width={480}
-              class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+              class="object-cover select-none w-full h-auto bg-gray-200 rounded-2xl cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
             />
-            {/* <img
-              src={image.photo}
-              alt={image.alt}
-              data-index={index + 1}
-              class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
-            /> */}
             <div class="space-y-2">
               <div class="flex justify-between text-gray-900 text-sm font-bold">
                 <h3>{image.title}</h3>
@@ -288,7 +280,9 @@ const { images } = Astro.props;
     <div
       class="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch"
     >
-      <div class="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
+      <div
+        class="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+      >
         <div class="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
           <Image
             src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
