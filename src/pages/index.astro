@@ -2,6 +2,7 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
+import ImageGallery from '~/components/widgets/ImageGallery.astro';
 // import Note from '~/components/widgets/Note.astro';
 // import Features from '~/components/widgets/Features.astro';
 // import Features2 from '~/components/widgets/Features2.astro';
@@ -16,6 +17,33 @@ const metadata = {
   title: 'Alejandra Perez Curti - Oil painting specialist in nature and birds',
   ignoreTitleTemplate: true,
 };
+
+const galleryImages = [
+  {
+    photo: 'https://cdn.devdojo.com/images/june2023/mountains-01.jpeg',
+    title: 'Huia',
+    alt: 'Photo of Mountains',
+    price: '99',
+    description: 'Oil on canvas',
+    size: '20x50 cms.',
+  },
+  {
+    photo: 'https://cdn.devdojo.com/images/june2023/mountains-02.jpeg',
+    title: 'Tui',
+    alt: 'Photo of Mountains',
+    price: '199',
+    description: 'Oil on canvas',
+    size: '40x40 cms.',
+  },
+  {
+    photo: 'https://cdn.devdojo.com/images/june2023/mountains-03.jpeg',
+    title: 'Kingfishers',
+    alt: 'Photo of Mountains',
+    price: '399',
+    description: 'Oil on canvas',
+    size: '30x70 cms.',
+  },
+];
 ---
 
 <Layout metadata={metadata}>
@@ -395,4 +423,6 @@ const metadata = {
       waste more time! :P
     </Fragment>
   </CallToAction> -->
+
+  <ImageGallery images={galleryImages} />
 </Layout>

@@ -1,0 +1,255 @@
+---
+// ImageGallery.astro
+interface GalleryImage {
+  photo: string;
+  title: string;
+  alt: string;
+  price: string;
+  description: string;
+  size: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+}
+
+const { images } = Astro.props;
+---
+
+<section id="works" class="w-full pb-32 scroll-pt-24 select-none">
+  <div class="max-w-7xl px-6 lg:px-8 mx-auto duration-1000 delay-300 opacity-0s select-none ease animate-fade-in-view">
+    <div class="mx-auto mb-16 max-w-xl text-center">
+      <h2 class="text-lg font-semibold leading-8 tracking-tight text-[#5BB4CC]">Testimonials</h2>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl">
+        We have worked with thousands of amazing people
+      </p>
+    </div>
+    <ul id="gallery" class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      {
+        images.map((image, index) => (
+          <li class="space-y-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+            <img
+              src={image.photo}
+              alt={image.alt}
+              data-index={index + 1}
+              class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+            />
+            <div class="space-y-2">
+              <div class="flex justify-between text-gray-900 text-sm font-bold">
+                <h3>{image.title}</h3>
+                <div>${image.price}</div>
+              </div>
+              <div>
+                <p class="text-gray-500 text-sm">{image.description}</p>
+                <p class="text-gray-500 text-sm">{image.size}</p>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  class ImageGallery {
+    private imageGalleryOpened: boolean = false;
+    private imageGalleryActiveUrl: string | null = null;
+    private imageGalleryImageIndex: number | null = null;
+    private gallery: HTMLElement;
+    private modal: HTMLElement | null = null;
+
+    constructor() {
+      this.gallery = document.getElementById('gallery')!;
+      this.initializeGallery();
+      this.createModal();
+      this.addKeyboardListeners();
+    }
+
+    private initializeGallery() {
+      const images = this.gallery.querySelectorAll('img');
+      images.forEach((img) => {
+        img.addEventListener('click', (e) => this.imageGalleryOpen(e));
+      });
+    }
+
+    private createModal() {
+      this.modal = document.createElement('div');
+      this.modal.className =
+        'fixed inset-0 z-[99] hidden items-center justify-center bg-black bg-opacity-50 select-none cursor-zoom-out';
+      this.modal.innerHTML = `
+      <div class="relative flex items-center justify-center w-11/12 xl:w-4/5 h-11/12">
+        <div class="absolute left-0 flex items-center justify-center text-white translate-x-10 rounded-full cursor-pointer xl:-translate-x-24 2xl:-translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+        </div>
+        <img class="object-contain object-center w-full h-full select-none cursor-zoom-out">
+        <div class="absolute right-0 flex items-center justify-center text-white -translate-x-10 rounded-full cursor-pointer xl:translate-x-24 2xl:translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+        </div>
+      </div>
+    `;
+      document.body.appendChild(this.modal);
+
+      // Add event listeners for modal controls
+      this.modal.querySelector('.left-0')?.addEventListener('click', () => this.imageGalleryPrev());
+      this.modal.querySelector('.right-0')?.addEventListener('click', () => this.imageGalleryNext());
+      this.modal.addEventListener('click', (e) => {
+        if (e.target === this.modal) {
+          this.imageGalleryClose();
+        }
+      });
+    }
+
+    private addKeyboardListeners() {
+      document.addEventListener('keydown', (e) => {
+        if (this.imageGalleryOpened) {
+          if (e.key === 'Escape') this.imageGalleryClose();
+          if (e.key === 'ArrowRight') this.imageGalleryNext();
+          if (e.key === 'ArrowLeft') this.imageGalleryPrev();
+        }
+      });
+    }
+
+    private imageGalleryOpen(event: Event) {
+      const target = event.target as HTMLImageElement;
+      this.imageGalleryImageIndex = parseInt(target.dataset.index || '1');
+      this.imageGalleryActiveUrl = target.src;
+      this.imageGalleryOpened = true;
+      this.modal!.classList.replace('hidden', 'flex');
+      const modalImg = this.modal!.querySelector('img') as HTMLImageElement;
+      modalImg.src = this.imageGalleryActiveUrl;
+    }
+
+    private imageGalleryClose() {
+      this.imageGalleryOpened = false;
+      this.modal!.classList.replace('flex', 'hidden');
+      setTimeout(() => {
+        this.imageGalleryActiveUrl = null;
+      }, 300);
+    }
+
+    private imageGalleryNext() {
+      const totalImages = this.gallery.querySelectorAll('img').length;
+      this.imageGalleryImageIndex = this.imageGalleryImageIndex === totalImages ? 1 : this.imageGalleryImageIndex! + 1;
+      this.updateModalImage();
+    }
+
+    private imageGalleryPrev() {
+      const totalImages = this.gallery.querySelectorAll('img').length;
+      this.imageGalleryImageIndex = this.imageGalleryImageIndex === 1 ? totalImages : this.imageGalleryImageIndex! - 1;
+      this.updateModalImage();
+    }
+
+    private updateModalImage() {
+      const nextImage = this.gallery.querySelector(`[data-index="${this.imageGalleryImageIndex}"]`) as HTMLImageElement;
+      this.imageGalleryActiveUrl = nextImage.src;
+      const modalImg = this.modal!.querySelector('img') as HTMLImageElement;
+      modalImg.src = this.imageGalleryActiveUrl;
+    }
+  }
+
+  // Initialize the gallery when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new ImageGallery();
+  });
+</script>
+
+<section id="testimonials" class="py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto isolate max-w-xl text-center relative">
+      <div
+        class="inset-0 absolute bg-gradient-to-t lg:translate-x-1/2 from-[#16EA16]/20 to-[#00FF00]/20 -z-10 blur-3xl skew-x-12 rounded-full mx-auto lg:size-96"
+      >
+      </div>
+      <div
+        class="inset-0 absolute bg-gradient-to-b from-[#002FFF]/20 to-[#00D0FF]/20 -z-10 blur-3xl skew-x-12 rounded-full mx-auto lg:size-96"
+      >
+      </div>
+      <h2 class="text-lg relative font-semibold leading-8 tracking-tight text-[#5BB4CC]">Testimonials</h2>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl">
+        We have worked with thousands of amazing people
+      </p>
+    </div>
+    <div class="mx-auto relative mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
+      <div class="-mt-8 sm:-mx-4 grid sm:grid-cols-2 sm:text-[0] lg:grid-cols-4">
+        <!-- card -->
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “Excepteur consectetur deserunt id incididunt veniam mollit officia sint qui aute duis sit cillum.
+                Reprehenderit fugiat amet aliqua in commodo minim sunt laborum.”
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <img
+                class="h-10 w-10 rounded-full bg-gray-50"
+                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Lindsay Walton</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇨🇱</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <!-- grid -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="bg-white pb-16 pt-24 sm:pb-24 sm:pt-32 xl:pb-32">
+  <div class="bg-[#E0F2F9] pb-20 sm:pb-24 xl:pb-0">
+    <div
+      class="mx-auto flex max-w-7xl flex-col items-center gap-x-8 gap-y-10 px-6 sm:gap-y-8 lg:px-8 xl:flex-row xl:items-stretch"
+    >
+      <div class="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
+        <div class="relative aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
+          <img
+            class="absolute inset-0 h-full w-full rounded-2xl bg-[#E0F2F9] object-cover shadow-2xl"
+            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
+            alt=""
+          />
+        </div>
+      </div>
+      <div class="w-full max-w-2xl xl:max-w-none xl:flex-auto xl:px-16 xl:py-24">
+        <figure class="relative isolate pt-6 sm:pt-12">
+          <svg
+            viewBox="0 0 162 128"
+            fill="none"
+            aria-hidden="true"
+            class="absolute left-0 top-0 -z-10 h-32 stroke-[#517994]/20"
+          >
+            <path
+              id="b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb"
+              d="M65.5697 118.507L65.8918 118.89C68.9503 116.314 71.367 113.253 73.1386 109.71C74.9162 106.155 75.8027 102.28 75.8027 98.0919C75.8027 94.237 75.16 90.6155 73.8708 87.2314C72.5851 83.8565 70.8137 80.9533 68.553 78.5292C66.4529 76.1079 63.9476 74.2482 61.0407 72.9536C58.2795 71.4949 55.276 70.767 52.0386 70.767C48.9935 70.767 46.4686 71.1668 44.4872 71.9924L44.4799 71.9955L44.4726 71.9988C42.7101 72.7999 41.1035 73.6831 39.6544 74.6492C38.2407 75.5916 36.8279 76.455 35.4159 77.2394L35.4047 77.2457L35.3938 77.2525C34.2318 77.9787 32.6713 78.3634 30.6736 78.3634C29.0405 78.3634 27.5131 77.2868 26.1274 74.8257C24.7483 72.2185 24.0519 69.2166 24.0519 65.8071C24.0519 60.0311 25.3782 54.4081 28.0373 48.9335C30.703 43.4454 34.3114 38.345 38.8667 33.6325C43.5812 28.761 49.0045 24.5159 55.1389 20.8979C60.1667 18.0071 65.4966 15.6179 71.1291 13.7305C73.8626 12.8145 75.8027 10.2968 75.8027 7.38572C75.8027 3.6497 72.6341 0.62247 68.8814 1.1527C61.1635 2.2432 53.7398 4.41426 46.6119 7.66522C37.5369 11.6459 29.5729 17.0612 22.7236 23.9105C16.0322 30.6019 10.618 38.4859 6.47981 47.558L6.47976 47.558L6.47682 47.5647C2.4901 56.6544 0.5 66.6148 0.5 77.4391C0.5 84.2996 1.61702 90.7679 3.85425 96.8404L3.8558 96.8445C6.08991 102.749 9.12394 108.02 12.959 112.654L12.959 112.654L12.9646 112.661C16.8027 117.138 21.2829 120.739 26.4034 123.459L26.4033 123.459L26.4144 123.465C31.5505 126.033 37.0873 127.316 43.0178 127.316C47.5035 127.316 51.6783 126.595 55.5376 125.148L55.5376 125.148L55.5477 125.144C59.5516 123.542 63.0052 121.456 65.9019 118.881L65.5697 118.507Z"
+            ></path>
+            <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x="86"></use>
+          </svg>
+          <h2 class="text-[#517994] mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            About <span class="text-[#5BB4CC]">The artist</span>
+          </h2>
+          <blockquote class="text-md text-[#517994]">
+            <p>
+              Alejandra was born in 1987 in Viña del Mar, Chile. In 2017, she moved to New Zealand, where she found a
+              land she now calls home. It is here, through her passion for birds, that she has discovered not only a
+              hobby in observing them but also a profound source of inspiration for her artwork. With studies in design,
+              marketing, and oil painting in both Chile and New Zealand, Alejandra has developed art therapy workshops
+              for Sororidad Latina (a feminist collective she founded in 2019, focused on supporting Latina immigrant
+              women in New Zealand) and offers both individual and group painting classes for children and adults.
+            </p>
+          </blockquote>
+          <figcaption class="mt-8 text-base">
+            <div class="font-semibold text-white">Judith Black</div>
+            <div class="mt-1 text-gray-400">CEO of Workcation</div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
