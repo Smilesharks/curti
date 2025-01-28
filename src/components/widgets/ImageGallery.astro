@@ -1,156 +1,152 @@
 ---
 import Image from '~/components/common/Image.astro';
-import type { Hero as Props } from '~/types';
-// ImageGallery.astro
-interface GalleryImage {
-  photo: string;
-  title: string;
-  alt: string;
-  price: string;
-  description: string;
-  size: string;
-}
-
-interface Props {
-  images: GalleryImage[];
-}
-
 const { images } = Astro.props;
 ---
 
-<section id="works" class="w-full pb-32 scroll-pt-24">
-  <div class="max-w-7xl px-6 lg:px-8 mx-auto duration-1000 delay-300 opacity-0s ease animate-fade-in-view">
-    <div class="mx-auto mb-16 max-w-xl text-center">
-      <h2 class="text-lg font-semibold leading-8 tracking-tight text-[#5BB4CC]">Work</h2>
-      <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl">The Art</p>
-    </div>
-    <ul id="gallery" class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
-      {
-        images.map((image, index) => (
-          <li class="space-y-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+<div
+  class="gallery max-w-7xl px-6 lg:px-8 mx-auto duration-1000 delay-300 opacity-0s ease animate-fade-in-view"
+  id="works"
+  x-data="{
+    open: false,
+    activeImage: null,
+    images: [],
+    openImage(idx) {
+      this.activeImage = parseInt(idx);
+      this.open = true;
+    },
+    init() {
+      this.images = Array.from(this.$el.querySelectorAll('[data-image]')).map(el => ({
+        photo: el.getAttribute('src'),
+        alt: el.getAttribute('alt'),
+        title: el.getAttribute('data-title'),
+        price: el.getAttribute('data-price'),
+        description: el.getAttribute('data-description'),
+        size: el.getAttribute('data-size')
+      }));
+    }
+  }"
+  @keydown.escape.window="open = false"
+  @keydown.arrow-right.window="if (open) activeImage = (activeImage + 1) % images.length"
+  @keydown.arrow-left.window="if (open) activeImage = (activeImage - 1 + images.length) % images.length"
+>
+  <div class="mx-auto mb-16 max-w-xl text-center">
+    <h2 class="text-lg font-semibold leading-8 tracking-tight text-[#5BB4CC]">The Art</h2>
+    <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl"> Exploring Color, Texture, and Form</p>
+  </div>
+
+  <!-- Grid de imágenes -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {
+      images.map((image, index) => (
+        <div
+          key={index}
+          class="space-y-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <button
+            @click="openImage($el.querySelector('[data-index]').dataset.index)"
+            class="w-full focus:outline-none focus:ring-2 focus:ring-[#5BB4CC] focus:ring-offset-2 rounded-xl"
+            :aria-label="`Ver ${image.title} en tamaño completo`"
+          >
             <Image
               src={image.photo}
               alt={image.alt}
-              data-index={index + 1}
+              data-index={index}
+              data-image
+              data-title={image.title}
+              data-price={image.price}
+              data-description={image.description}
+              data-size={image.size}
+              loading="lazy"
               width={480}
-              class="object-cover  w-full h-auto bg-gray-200 rounded-2xl cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+              class="object-cover w-full h-auto bg-gray-200 rounded-xl cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
             />
-            <div class="space-y-2">
-              <div class="flex justify-between text-gray-900 text-sm">
-                <h3 class="w-1/2 font-bold">{image.title}</h3>
-                <p class="text-xs w-1/2 text-left ">{image.price}</p>
-              </div>
-              <div>
-                <p class="text-gray-500 text-sm">{image.description}</p>
-                <p class="text-gray-500 text-sm">{image.size}</p>
-              </div>
+          </button>
+          <div class="space-y-2">
+            <div class="flex justify-between text-gray-900 text-sm">
+              <h3 class="w-1/2 font-bold">{image.title}</h3>
+              <span class="text-xs text-left">{image.price}</span>
             </div>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-</section>
-
-<script>
-  class ImageGallery {
-    private imageGalleryOpened: boolean = false;
-    private imageGalleryActiveUrl: string | null = null;
-    private imageGalleryImageIndex: number | null = null;
-    private gallery: HTMLElement;
-    private modal: HTMLElement | null = null;
-
-    constructor() {
-      this.gallery = document.getElementById('gallery')!;
-      this.initializeGallery();
-      this.createModal();
-      this.addKeyboardListeners();
-    }
-
-    private initializeGallery() {
-      const images = this.gallery.querySelectorAll('img');
-      images.forEach((img) => {
-        img.addEventListener('click', (e) => this.imageGalleryOpen(e));
-      });
-    }
-
-    private createModal() {
-      this.modal = document.createElement('div');
-      this.modal.className =
-        'fixed inset-0 z-[99] hidden items-center justify-center bg-black bg-opacity-50  cursor-zoom-out';
-      this.modal.innerHTML = `
-      <div class="relative flex items-center justify-center w-5/6 xl:w-4/5 h-5/6">
-        <div class="absolute left-0 flex items-center justify-center text-white translate-x-10 rounded-full cursor-pointer xl:-translate-x-24 2xl:-translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            <div>
+              <p class="text-muted text-sm">{image.description}</p>
+              <p class="text-muted text-sm">{image.size}</p>
+            </div>
+          </div>
         </div>
-        <img class="object-contain p-12 object-center w-full h-full  cursor-zoom-out">
-        <div class="absolute right-0 flex items-center justify-center text-white -translate-x-10 rounded-full cursor-pointer xl:translate-x-24 2xl:translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20">
-          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+      ))
+    }
+  </div>
+
+  <!-- Modal mejorado -->
+  <template x-teleport="body">
+    <div
+      x-show="open"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      :aria-labelledby="'modal-title'"
+      x-cloak
+    >
+      <!-- Overlay -->
+      <div class="fixed inset-0 bg-black bg-opacity-75 transition-opacity"></div>
+
+      <!-- Modal container -->
+      <div class="flex min-h-screen items-center justify-center p-4">
+        <div
+          class="relative bg-white rounded-lg max-w-3xl w-full mx-auto"
+          @click.away="open = false"
+        >
+          <!-- Controles de navegación -->
+          <button
+            @click="activeImage = (activeImage - 1 + images.length) % images.length"
+            class="absolute left-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#5BB4CC]"
+            aria-label="Previews Imagen"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          </button>
+          <button
+            @click="activeImage = (activeImage + 1) % images.length"
+            class="absolute right-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#5BB4CC]"
+            aria-label="Next image"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+
+          <!-- Contenido del modal -->
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-4">
+              <h2 id="modal-title" class="text-xl font-bold" x-text="images[activeImage]?.title"></h2>
+              <button
+                @click="open = false"
+                class="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#5BB4CC] rounded-full p-1"
+                aria-label="Close modal"
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+            </div>
+
+            <div class="aspect-auto">
+              <img
+                :src="images[activeImage]?.photo"
+                :alt="images[activeImage]?.alt"
+                class="w-full h-full object-contain rounded-lg"
+              />
+            </div>
+            <div class="mt-4 flex justify-between items-center space-y-2">
+            <div class="">
+              <p class="text-gray-700" x-text="images[activeImage]?.description"></p>
+              <p class="text-gray-600" x-text="images[activeImage]?.size"></p>
+            </div>
+              <p class="text-lg font-semibold" x-text="images[activeImage]?.price"></p>
+            </div>
+          </div>
         </div>
       </div>
-    `;
-      document.body.appendChild(this.modal);
-
-      // Add event listeners for modal controls
-      this.modal.querySelector('.left-0')?.addEventListener('click', () => this.imageGalleryPrev());
-      this.modal.querySelector('.right-0')?.addEventListener('click', () => this.imageGalleryNext());
-      this.modal.addEventListener('click', (e) => {
-        if (e.target === this.modal) {
-          this.imageGalleryClose();
-        }
-      });
-    }
-
-    private addKeyboardListeners() {
-      document.addEventListener('keydown', (e) => {
-        if (this.imageGalleryOpened) {
-          if (e.key === 'Escape') this.imageGalleryClose();
-          if (e.key === 'ArrowRight') this.imageGalleryNext();
-          if (e.key === 'ArrowLeft') this.imageGalleryPrev();
-        }
-      });
-    }
-
-    private imageGalleryOpen(event: Event) {
-      const target = event.target as HTMLImageElement;
-      this.imageGalleryImageIndex = parseInt(target.dataset.index || '1');
-      this.imageGalleryActiveUrl = target.src;
-      this.imageGalleryOpened = true;
-      this.modal!.classList.replace('hidden', 'flex');
-      const modalImg = this.modal!.querySelector('img') as HTMLImageElement;
-      modalImg.src = this.imageGalleryActiveUrl;
-    }
-
-    private imageGalleryClose() {
-      this.imageGalleryOpened = false;
-      this.modal!.classList.replace('flex', 'hidden');
-      setTimeout(() => {
-        this.imageGalleryActiveUrl = null;
-      }, 300);
-    }
-
-    private imageGalleryNext() {
-      const totalImages = this.gallery.querySelectorAll('img').length;
-      this.imageGalleryImageIndex = this.imageGalleryImageIndex === totalImages ? 1 : this.imageGalleryImageIndex! + 1;
-      this.updateModalImage();
-    }
-
-    private imageGalleryPrev() {
-      const totalImages = this.gallery.querySelectorAll('img').length;
-      this.imageGalleryImageIndex = this.imageGalleryImageIndex === 1 ? totalImages : this.imageGalleryImageIndex! - 1;
-      this.updateModalImage();
-    }
-
-    private updateModalImage() {
-      const nextImage = this.gallery.querySelector(`[data-index="${this.imageGalleryImageIndex}"]`) as HTMLImageElement;
-      this.imageGalleryActiveUrl = nextImage.src;
-      const modalImg = this.modal!.querySelector('img') as HTMLImageElement;
-      modalImg.src = this.imageGalleryActiveUrl;
-    }
-  }
-
-  // Initialize the gallery when the DOM is loaded
-  document.addEventListener('DOMContentLoaded', () => {
-    new ImageGallery();
-  });
-</script>
+    </div>
+  </template>
+</div>
