@@ -3,6 +3,8 @@ import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 import ImageGallery from '~/components/widgets/ImageGallery.astro';
+import About from '~/components/widgets/About.astro';
+import Testimonials from '~/components/widgets/Testimonials_2.astro';
 // import Note from '~/components/widgets/Note.astro';
 // import Features from '~/components/widgets/Features.astro';
 // import Features2 from '~/components/widgets/Features2.astro';
@@ -20,28 +22,100 @@ const metadata = {
 
 const galleryImages = [
   {
-    photo: 'https://cdn.devdojo.com/images/june2023/mountains-01.jpeg',
-    title: 'Huia',
-    alt: 'Photo of Mountains',
-    price: '99',
+    photo: '~/assets/images/cuadros/circle/cisne.jpg',
+    title: 'Cisne',
+    alt: 'Black swan oil painting',
+    price: 'Available',
     description: 'Oil on canvas',
-    size: '20x50 cms.',
+    size: '50x50 cms.',
   },
   {
-    photo: 'https://cdn.devdojo.com/images/june2023/mountains-02.jpeg',
-    title: 'Tui',
-    alt: 'Photo of Mountains',
-    price: '199',
+    photo: '~/assets/images/cuadros/circle/kings.jpg',
+    title: 'Kingfishers oil painting',
+    alt: 'New Zealand Kingfishers birds',
+    price: 'Available',
+    description: 'Oil on canvas',
+    size: '50x50 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/circle/mujer.jpg',
+    title: 'Spirit woman',
+    alt: 'Spirit woman oil painting',
+    price: 'Available for commission',
+    description: 'Oil on canvas',
+    size: '50x50 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/circle/ojo1.jpg',
+    title: 'Eyes universe',
+    alt: 'Eyes universe oil painting',
+    price: 'Available',
     description: 'Oil on canvas',
     size: '40x40 cms.',
   },
   {
-    photo: 'https://cdn.devdojo.com/images/june2023/mountains-03.jpeg',
-    title: 'Kingfishers',
-    alt: 'Photo of Mountains',
-    price: '399',
+    photo: '~/assets/images/cuadros/circle/tui2.jpg',
+    title: 'Tui daylight',
+    alt: 'Tui bird oil painting',
+    price: 'Available for commission',
     description: 'Oil on canvas',
-    size: '30x70 cms.',
+    size: '40x40 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/circle/intergalacticTui2.jpg',
+    title: 'Tui Spiritual guide',
+    alt: 'New Zealand Tui bird oil painting',
+    price: 'Available for commission',
+    description: 'Oil on canvas',
+    size: '40x40 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/square/fantail1.jpg',
+    title: 'Fantail',
+    alt: 'New Zealand Fantail oil painting',
+    price: 'Available for commission',
+    description: 'Oil on canvas',
+    size: '20x20 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/square/tieke1.jpg',
+    title: 'Tieke',
+    alt: 'Saddleback, Tieke bird oil painting',
+    price: 'Available',
+    description: 'Oil on canvas',
+    size: '25x25 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/square/hongos1.jpg',
+    title: 'Blue mushrooms',
+    alt: 'Blue mushrooms oil painting',
+    price: 'Available',
+    description: 'Oil on canvas',
+    size: '20x20 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/square/tui.jpg',
+    title: 'Tui portrait',
+    alt: 'Tūī portrait oil painting',
+    price: 'Available for commission',
+    description: 'Oil on canvas',
+    size: '25x25 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/square/huia1.jpg',
+    title: 'Huia portrait oil painting',
+    alt: 'Photo of Mountains',
+    price: 'Available',
+    description: 'Oil on canvas',
+    size: '60x50 cms.',
+  },
+  {
+    photo: '~/assets/images/cuadros/square/fungis.jpg',
+    title: 'Mushrooms',
+    alt: 'Mushrooms oil painting',
+    price: 'Available for commission',
+    description: 'Oil on canvas',
+    size: '22x30 cms.',
   },
 ];
 ---
@@ -423,6 +497,16 @@ const galleryImages = [
       waste more time! :P
     </Fragment>
   </CallToAction> -->
-
   <ImageGallery images={galleryImages} />
+  <Testimonials />
+  <About
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Get in touch',
+        href: 'mailto:aleperezcurti@gmail.com?subject=Inquiry%20About%20Your%20Artwork&body=Dear%20Alex,%0D%0A%0D%0AI%27m%20particularly%20interested%20in%20one%20of%20your%20paintings.%0D%0A%0D%0AThe%20piece%20I%27m%20interested%20in%20is:%20[Please%20describe%20the%20artwork]%0D%0A%0D%0AI%20would%20love%20to%20know:%0D%0A-%20If%20this%20piece%20is%20still%20available%0D%0A-%20The%20price%20and%20shipping%20options%0D%0A%0D%0ABest%20regards',
+        target: '_blank',
+      },
+    ]}
+  />
 </Layout>

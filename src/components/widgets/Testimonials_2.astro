@@ -1,0 +1,129 @@
+---
+import Image from '~/components/common/Image.astro';
+import type { Hero as Props } from '~/types';
+---
+
+<section id="testimonials" class="py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto isolate max-w-2xl text-center relative">
+      <div
+        class="inset-0 absolute bg-gradient-to-t lg:translate-x-1/2 from-[#16EA16]/20 to-[#00FF00]/20 -z-10 blur-3xl skew-x-12 rounded-full mx-auto lg:size-96"
+      >
+      </div>
+      <div
+        class="inset-0 absolute bg-gradient-to-b from-[#002FFF]/20 to-[#00D0FF]/20 -z-10 blur-3xl skew-x-12 rounded-full mx-auto lg:size-96"
+      >
+      </div>
+      <h2 class="text-lg relative font-semibold leading-8 tracking-tight text-[#5BB4CC]">Testimonials</h2>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl">
+        We have worked with amazing people
+      </p>
+    </div>
+    <div class="mx-auto relative mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
+      <div class="-mt-8 sm:-mx-4 grid sm:grid-cols-2 sm:text-[0] lg:grid-cols-4">
+        <!-- card -->
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “Excepteur consectetur deserunt id incididunt veniam mollit officia sint qui aute duis sit cillum.
+                Reprehenderit fugiat amet aliqua in commodo minim sunt laborum.”
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <img
+                class="h-10 w-10 rounded-full bg-gray-50"
+                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Lindsay Walton</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇨🇱</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <!-- grid -->
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “Alex created a stunning New Zealand fantail painting for my aunt's birthday. She was quick to respond,
+                open to suggestions, and highly professional. The result was magical! Alejandra's passion and expertise
+                shine through. Highly recommend her art!”
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <Image
+                src="~/assets/images/testimonials/evie-aitcheson.jpg"
+                alt="Dani Amora"
+                width={50}
+                class="size-10 rounded-full bg-gray-50"
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Evie Aitcheson</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇳🇿</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “I bought a stunning Tui painting from Alejandra, and it’s so vibrant and detailed. Her art of New
+                Zealand birds is truly special, and her passion shines through every piece. It’s beautifully crafted,
+                and inspires me every day. Thank you, Alex!"
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <Image
+                src="~/assets/images/testimonials/dani-amora.jpg"
+                alt="Dani Amora"
+                width={50}
+                class="size-10 rounded-full bg-gray-50"
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Dani Amora</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇨🇱</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <div
+          class="pt-8 sm:inline-block sm:w-full sm:px-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+        >
+          <figure class="rounded-2xl bg-white p-8 text-sm leading-6">
+            <blockquote class="text-gray-900">
+              <p>
+                “Excepteur consectetur deserunt id incididunt veniam mollit officia sint qui aute duis sit cillum.
+                Reprehenderit fugiat amet aliqua in commodo minim sunt laborum.”
+              </p>
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-x-4">
+              <img
+                class="h-10 w-10 rounded-full bg-gray-50"
+                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+              <div class="flex gap-2">
+                <div class="font-semibold text-gray-900">Lindsay Walton</div>
+                <span class="text-[#5BB4CC] font-bold">/</span>
+                <div class="text-gray-600">🇨🇱</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -18,11 +18,6 @@ const {
 } = Astro.props;
 
 const paintImg = '~/assets/images/paint_gray.png';
-// Hero images
-// const heroImg1 = '~/assets/images/paint_gray.png';
-// const heroImg2 = '~/assets/images/paint_gray.png';
-// const heroImg3 = '~/assets/images/paint_gray.png';
-// const heroImg4 = '~/assets/images/paint_gray.png';
 ---
 
 <section class="relative hidden md:-mt-[76px] not-prose" {...id ? { id } : {}}>
@@ -110,19 +105,19 @@ const paintImg = '~/assets/images/paint_gray.png';
     src={paintImg}
     alt="Oil paint"
     width={500}
-    class="blue-img select-none opacity-20 max-lg:hidden absolute left-[55%] top-[20%] right-0"
+    class="blue-img select-none pointer-events-none opacity-20 max-lg:hidden absolute left-[55%] top-[20%] right-0 revealing-image"
   />
   <Image
     src={paintImg}
     alt="Oil paint"
     width={400}
-    class="blue-img select-none opacity-20 absolute max-lg:hidden right-[15%] top-1/2"
+    class="blue-img select-none pointer-events-none opacity-20 absolute max-lg:hidden right-[15%] top-1/2 revealing-image"
   />
   <Image
     src={paintImg}
     alt="Oil paint"
     width={400}
-    class="blue-img select-none opacity-20 absolute max-lg:hidden right-[10%] top-[10%]"
+    class="blue-img select-none pointer-events-none opacity-20 absolute max-lg:hidden right-[10%] top-[10%] revealing-image"
   />
   <div
     class="absolute left-1/2 blur-3xl right-0 top-0 -z-10 -ml-24 transform-gpu overflow-hidden lg:ml-24 xl:ml-48 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
@@ -185,46 +180,51 @@ const paintImg = '~/assets/images/paint_gray.png';
             class="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80"
           >
             <div class="relative">
-              <img
-                src="https://plus.unsplash.com/premium_photo-1664013263421-91e3a8101259?w=220&h=330&fit=crop"
-                alt=""
-                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+              <Image
+                src="~/assets/images/photos/hero-04.jpg"
+                alt="Tūī portrait oil painting"
+                width={220}
+                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-md lg:shadow-2xl lg:shadow-emerald-500/50"
               />
               <div class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"></div>
             </div>
           </div>
           <div class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
             <div class="relative">
-              <img
-                src="https://images.unsplash.com/photo-1663791474939-fcf3c0219787?w=220&h=330&fit=crop"
-                alt=""
-                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+              <Image
+                src="~/assets/images/photos/hero-07.jpg"
+                alt="Brushes and oil paint"
+                width={220}
+                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-md lg:shadow-2xl lg:shadow-emerald-500/50"
               />
               <div class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"></div>
             </div>
             <div class="relative">
-              <img
-                src="https://images.unsplash.com/photo-1602028286725-a4aad1b5d3d9?w=220&h=330&fit=crop"
-                alt=""
-                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+              <Image
+                src="~/assets/images/photos/hero-01.jpg"
+                alt="New Zealand Tieke bierd"
+                width={220}
+                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-md lg:shadow-2xl lg:shadow-emerald-500/50"
               />
               <div class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"></div>
             </div>
           </div>
           <div class="w-44 flex-none space-y-8 pt-32 sm:pt-0">
             <div class="relative">
-              <img
-                src="https://images.unsplash.com/photo-1520420097861-e4959843b682?w=220&h=330&fit=crop"
-                alt=""
-                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+              <Image
+                src="~/assets/images/photos/hero-02.jpg"
+                alt="New Zealand Fantail bierd"
+                width={220}
+                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-md lg:shadow-2xl lg:shadow-emerald-500/50"
               />
               <div class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"></div>
             </div>
             <div class="relative">
-              <img
-                src="https://images.unsplash.com/photo-1574888347495-a0286e21a850?w=220&h=330&fit=crop"
-                alt=""
-                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+              <Image
+                src="~/assets/images/photos/hero-05.jpg"
+                alt="Brushes and oil paint"
+                width={220}
+                class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-md lg:shadow-2xl lg:shadow-emerald-500/50"
               />
               <div class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"></div>
             </div>
