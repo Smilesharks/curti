@@ -15,7 +15,7 @@ const { actions = await Astro.slots.render('actions') } = Astro.props;
       <div class="-mt-8 w-full max-w-2xl xl:-mb-8 xl:w-96 xl:flex-none">
         <div class="relative isolate aspect-[2/1] h-full md:-mx-8 xl:mx-0 xl:aspect-auto">
           <div
-            class="absolute h-full object-cover z-30 w-[480px] max-h-[640px] bg-gradient-to-b from-black/0 via-black/0 rounded-2xl to-[#000]"
+            class="absolute h-full object-cover z-30 max-2xl:hidden xl:w-[480px] xl:max-h-[640px] bg-gradient-to-b from-black/0 via-black/0 rounded-2xl to-[#000]"
           >
           </div>
           <Image
@@ -25,7 +25,7 @@ const { actions = await Astro.slots.render('actions') } = Astro.props;
             class="absolute h-full w-full z-20 rounded-2xl object-cover revealing-image"
           />
           <div
-            class="absolute h-full object-cover w-[480px] max-h-[640px] z-10 bg-gradient-to-b from-black/0 rounded-2xl to-[#000]"
+            class="absolute h-full object-cover max-2xl:hidden xl:w-[480px] xl:max-h-[640px] z-10 bg-gradient-to-b from-black/0 rounded-2xl to-[#000]"
           >
           </div>
           <Image
@@ -87,24 +87,26 @@ const { actions = await Astro.slots.render('actions') } = Astro.props;
 </section>
 
 <style>
-  @keyframes reveal {
-    from {
-      transform: translateY(-150px);
-      /* opacity: 0; */
-      /* clip-path: inset(45% 20% 45% 20%); */
+  @media only screen and (min-width: 1280px) {
+    @keyframes reveal {
+      from {
+        transform: translateY(-150px);
+        /* opacity: 0; */
+        /* clip-path: inset(45% 20% 45% 20%); */
+      }
+      to {
+        /* opacity: 1; */
+        /* clip-path: inset(0% 0% 0% 0%); */
+      }
     }
-    to {
-      /* opacity: 1; */
-      /* clip-path: inset(0% 0% 0% 0%); */
+
+    .revealing-image {
+      view-timeline-name: --revealing-image;
+      view-timeline-axis: block;
+
+      animation: linear reveal both;
+      animation-timeline: --revealing-image;
+      animation-range: entry 5% cover 40%;
     }
-  }
-
-  .revealing-image {
-    view-timeline-name: --revealing-image;
-    view-timeline-axis: block;
-
-    animation: linear reveal both;
-    animation-timeline: --revealing-image;
-    animation-range: entry 5% cover 40%;
   }
 </style>

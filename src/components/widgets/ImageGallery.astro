@@ -24,7 +24,7 @@ const { images } = Astro.props;
       <h2 class="text-lg font-semibold leading-8 tracking-tight text-[#5BB4CC]">Work</h2>
       <p class="mt-2 text-3xl font-bold tracking-tight text-[#517994] sm:text-4xl">The Art</p>
     </div>
-    <ul id="gallery" class="grid grid-cols-1 gap-8 lg:grid-cols-4">
+    <ul id="gallery" class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4">
       {
         images.map((image, index) => (
           <li class="space-y-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
@@ -38,7 +38,7 @@ const { images } = Astro.props;
             <div class="space-y-2">
               <div class="flex justify-between text-gray-900 text-sm">
                 <h3 class="w-1/2 font-bold">{image.title}</h3>
-                <p class="text-xs text-left ">{image.price}</p>
+                <p class="text-xs w-1/2 text-left ">{image.price}</p>
               </div>
               <div>
                 <p class="text-gray-500 text-sm">{image.description}</p>
