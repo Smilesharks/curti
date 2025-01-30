@@ -192,6 +192,6 @@ export const footerData = {
 	</svg>
 
 
-    Made by <a class="text-blue-600 underline dark:text-muted" href="https://www.arielcerda.com/"> Ariel Cerda</a> · All rights reserved.
+    Designed and developed by <a target="_blank" class="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent" href="https://www.arielcerda.com/portfolio"> Ariel Cerda</a>.
   `,
 };
