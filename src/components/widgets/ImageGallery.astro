@@ -131,12 +131,19 @@ const { images } = Astro.props;
             </div>
 
             <div class="aspect-auto">
-              <img
-                :src="images[activeImage]?.photo"
-                :alt="images[activeImage]?.alt"
-                class="w-full h-full object-contain rounded-lg"
-              />
+              {images.map((image, index) => (
+                <div x-show={`activeImage === ${index}`}>
+                  <Image
+                    src={image.photo}
+                    alt={image.alt}
+                    width={920}
+                    class="w-full h-full object-contain rounded-lg"
+                  />
+                </div>
+              ))}
             </div>
+
+
             <div class="mt-4 flex justify-between items-center space-y-2">
             <div class="">
               <p class="text-gray-700" x-text="images[activeImage]?.description"></p>
